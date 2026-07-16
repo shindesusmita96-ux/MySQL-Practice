@@ -18,3 +18,34 @@ Example:
 'NEW YORK' = 'new york'
 'São Paulo' = 'Sao Paulo'
 */
+
+-- =====================================================================================================================================
+-- Find values that cannot be converted to a numeric type
+-- Purpose: Detect invalid numeric values stored as text (NVARCHAR)
+--          Useful before changing a column to DECIMAL, FLOAT, or INT
+-- ======================================================================================================================================
+
+SELECT
+    Profit
+FROM superstore
+WHERE TRY_CAST(Profit AS DECIMAL(18,4)) IS NULL
+      AND Profit IS NOT NULL;
+
+SELECT
+    column_name
+FROM table_name
+WHERE TRY_CAST(column_name AS DECIMAL(18,4)) IS NULL
+      AND column_name IS NOT NULL;
+
+/* Example invalid values:
+- N/A
+- Unknown
+- -
+- 9,331.20
+- 1e-04 (depending on the target data type)
+*/
+
+
+
+
+
